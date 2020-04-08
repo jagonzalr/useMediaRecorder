@@ -113,15 +113,29 @@ const App = () => {
   }
 
   return (
-    <div className='container mx-auto px-3 py-2'>
-      <h1 className='bold font-bold text-3xl'>useMediaRecorder</h1>
-      <select
-        value={recordingType}
-        onChange={e => setRecordingType(e.target.value)}
-      >
-        <option value='video'>Video</option>
-        <option value='audio'>Audio</option>
-      </select>
+    <div className='container mx-auto px-3 py-3'>
+      <div className='flex mb-4'>
+        <h1 className='bold font-bold text-3xl flex-1'>useMediaRecorder</h1>
+        <div className='relative flex-shrink'>
+          <select
+            className='block appearance-none w-full bg-white border border-gray-400 text-black py-3 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-700'
+            value={recordingType}
+            onChange={e => setRecordingType(e.target.value)}
+          >
+            <option value='video'>Video</option>
+            <option value='audio'>Audio</option>
+          </select>
+          <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black'>
+            <svg
+              className='fill-current h-4 w-4'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+            >
+              <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
+            </svg>
+          </div>
+        </div>
+      </div>
       {err && <p style={{ color: 'red', fontSize: '1.2rem' }}>{err}</p>}
       <div className='flex mt-2'>
         {!showPreview && (
