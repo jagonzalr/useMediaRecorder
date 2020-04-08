@@ -1,4 +1,3 @@
-/* eslint-disable */
 'use strict'
 
 import React, { Fragment, useEffect, useRef, useState } from 'react'
