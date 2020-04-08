@@ -1,6 +1,7 @@
 'use strict'
 
 import React, { Fragment, useEffect, useRef, useState } from 'react'
+import WaveSurfer from 'wavesurfer.js'
 
 import { useMediaRecorder } from '../src/index'
 
@@ -9,6 +10,8 @@ import './styles/index.scss'
 
 const App = () => {
   const recordingRef = useRef(null)
+  const [waveform, setWaveform] = useState(null)
+  const [waveformPlaying, setWaveformPlaying] = useState(false)
   const [recordingType, setRecordingType] = useState('video')
   const [isRecording, setIsRecording] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
@@ -37,7 +40,31 @@ const App = () => {
   }, [data])
 
   useEffect(() => {
-    if (showRecording && recordingUrl) {
+    if (showRecording && recordingType === 'audio') {
+      setWaveform(
+        WaveSurfer.create({
+          barWidth: 3,
+          cursorWidth: 1,
+          container: '#waveform',
+          backend: 'WebAudio',
+          height: 80,
+          progressColor: '#2D5BFF',
+          responsive: true,
+          waveColor: '#EFEFEF',
+          cursorColor: 'transparent'
+        })
+      )
+    }
+  }, [showRecording, recordingType])
+
+  useEffect(() => {
+    if (waveform && recordingUrl) {
+      waveform.load(recordingUrl)
+    }
+  }, [waveform, recordingUrl])
+
+  useEffect(() => {
+    if (showRecording && recordingUrl && recordingType === 'video') {
       recordingRef.current.src = recordingUrl
     }
   }, [showRecording])
@@ -59,6 +86,8 @@ const App = () => {
   const onStartRecording = e => {
     e.preventDefault()
     setIsRecording(true)
+    setShowRecording(false)
+    setRecordingUrl(null)
   }
 
   const onStopRecording = e => {
@@ -76,16 +105,36 @@ const App = () => {
     setShowRecording(false)
   }
 
+  const onWaveformPlay = e => {
+    e.preventDefault()
+    setWaveformPlaying(!waveformPlaying)
+    if (waveform) waveform.playPause()
+  }
+
   return (
-    <div className='container mx-auto px-3 py-2'>
-      <h1 className='bold font-bold text-3xl'>useMediaRecorder</h1>
-      <select
-        value={recordingType}
-        onChange={e => setRecordingType(e.target.value)}
-      >
-        <option value='video'>Video</option>
-        <option value='audio'>Audio</option>
-      </select>
+    <div className='container mx-auto px-3 py-3'>
+      <div className='flex mb-4'>
+        <h1 className='bold font-bold text-3xl flex-1'>useMediaRecorder</h1>
+        <div className='relative flex-shrink'>
+          <select
+            className='block appearance-none w-full bg-white border border-gray-400 text-black py-3 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-700'
+            value={recordingType}
+            onChange={e => setRecordingType(e.target.value)}
+          >
+            <option value='video'>Video</option>
+            <option value='audio'>Audio</option>
+          </select>
+          <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black'>
+            <svg
+              className='fill-current h-4 w-4'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+            >
+              <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
+            </svg>
+          </div>
+        </div>
+      </div>
       {err && <p style={{ color: 'red', fontSize: '1.2rem' }}>{err}</p>}
       <div className='flex mt-2'>
         {!showPreview && (
@@ -122,7 +171,7 @@ const App = () => {
             )}
             <a
               href={recordingUrl}
-              download={'recording.webm'}
+              download={`recording-${recordingType}.webm`}
               className='flex-shrink mr-2 button'
             >
               Download
@@ -146,6 +195,7 @@ const App = () => {
             {recordingType === 'audio' && (
               <Fragment>
                 <audio autoPlay muted ref={setCaptureRef} id='capture-audio' />
+                {!isRecording && <p>Listening to audio ...</p>}
                 {isRecording && <p>Recording audio ...</p>}
               </Fragment>
             )}
@@ -163,7 +213,12 @@ const App = () => {
               />
             )}
             {recordingType === 'audio' && (
-              <audio controls ref={recordingRef} id='recording-audio' />
+              <Fragment>
+                <div id='waveform' className='mb-2' />
+                <button onClick={onWaveformPlay}>
+                  {waveformPlaying ? 'Pause' : 'Play'}
+                </button>
+              </Fragment>
             )}
           </Fragment>
         )}
