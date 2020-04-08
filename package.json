@@ -69,5 +69,16 @@
     "plugins": [
       "@babel/plugin-syntax-dynamic-import"
     ]
+  },
+  "lint-staged": {
+    "**/*.{js,jsx}": [
+      "npm run --silent lint",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && pretty-quick --staged && npm run test"
+    }
   }
 }
