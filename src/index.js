@@ -2,6 +2,51 @@
 
 import { useEffect, useState } from 'react'
 
+export const useMediaRecorder = isRecording => {
+  const [err, setErr] = useState(null)
+  const [data, setData] = useState(null)
+  const [recorder, setRecorder] = useState(null)
+  const [ref, setRef] = useState(null)
+  const [stream, setStream] = useState({})
+
+  useEffect(() => {
+    if (ref) {
+      getUserMedia(setStream, setErr)
+    } else if (stream.id) {
+      removeTracks(stream)
+      setStream({})
+      if (recorder) setRecorder(null)
+      if (data) setData(null)
+    }
+  }, [ref])
+
+  useEffect(() => {
+    if (stream.id) {
+      ref.srcObject = stream
+      ref.captureStream = ref.captureStream || ref.mozCaptureStream
+    }
+  }, [stream.id])
+
+  useEffect(() => {
+    if (isRecording) {
+      setData(null)
+      let chunks = []
+
+      const mediaRecorder = new MediaRecorder(ref.captureStream())
+      mediaRecorder.ondataavailable = e => chunks.push(e.data)
+      mediaRecorder.onerror = e => setErr(getRecorderError(e.error))
+      mediaRecorder.onstop = () => setData(chunks)
+      mediaRecorder.start(10)
+
+      setRecorder(mediaRecorder)
+    } else if (recorder) {
+      recorder.stop()
+    }
+  }, [isRecording])
+
+  return [setRef, data, err]
+}
+
 async function getUserMedia(setStream, setErr) {
   try {
     const options = { video: true, audio: true }
@@ -10,6 +55,23 @@ async function getUserMedia(setStream, setErr) {
   } catch (err) {
     setErr(err.message)
   }
+}
+
+function getRecorderError(error) {
+  let errMessage = null
+  switch (error.name) {
+    case 'InvalidStateError':
+      errMessage = 'An error occurred while recording. Try again later.'
+      break
+    case 'SecurityError':
+      errMessage = 'Recording is not allowed due to security restrictions.'
+      break
+    default:
+      errMessage = 'An error occurred while recording. Try again later.'
+      break
+  }
+
+  return errMessage
 }
 
 function getTracks(stream) {
@@ -28,27 +90,4 @@ function removeTracks(stream) {
       removeTrack(stream, track)
     })
   }
-}
-
-export const useMediaRecorder = () => {
-  const [err, setErr] = useState(null)
-  const [stream, setStream] = useState({})
-  const [ref, setRef] = useState(null)
-
-  useEffect(() => {
-    if (ref) {
-      getUserMedia(setStream, setErr)
-    } else if (stream.id) {
-      removeTracks(stream)
-      setStream({})
-    }
-  }, [ref])
-
-  useEffect(() => {
-    if (stream.id) {
-      ref.srcObject = stream
-    }
-  }, [stream.id])
-
-  return [setRef, stream, err]
 }
