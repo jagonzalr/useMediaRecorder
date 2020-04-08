@@ -49,7 +49,7 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.0.4",
     "husky": "^4.2.3",
-    "jest-cli": "^25.2.7",
+    "lint-staged": "^10.1.2",
     "prettier": "^2.0.4",
     "pretty-quick": "^2.0.1",
     "prop-types": "^15.7.2",
