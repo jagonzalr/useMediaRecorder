@@ -1,7 +1,4 @@
-<p>
-	<a href="https://github.com/jagonzalr/useMediaRecorder/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/npm/l/use-media-recorder.svg?type=flat" alt="Github license"></a>
-	<a href="https://www.npmjs.com/package/use-media-recorder" target="_blank"><img src="https://img.shields.io/npm/v/use-media-recorder.svg?type=flat" alt="npm version"></a>
-</p>
+[![npm version](https://badge.fury.io/js/use-media-recorder.svg)](https://badge.fury.io/js/use-media-recorder)
 
 # useMediaRecorder
 
