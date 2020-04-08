@@ -108,11 +108,6 @@ let config = {
       template: './demo/index.html',
       inject: true
     }),
-    new webpack.ContextReplacementPlugin(
-      /date\-fns[\/\\]/,
-      new RegExp(`[/\\\\\](${['en'].join('|')})[/\\\\\]`)
-    ),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.NamedModulesPlugin(),
     new CaseSensitivePathsPlugin()
   ]

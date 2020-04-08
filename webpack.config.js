@@ -10,12 +10,12 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   externals: {
-    react: 'react',
+    react: 'react'
   },
   output: {
     path: path.resolve('lib'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: [
@@ -26,27 +26,27 @@ module.exports = {
           {
             loader: 'eslint-loader',
             options: {
-              formatter: eslintFormatter,
-            },
-          },
+              formatter: eslintFormatter
+            }
+          }
         ],
         include: [srcPath],
-        exclude: [/node_modules/],
+        exclude: [/node_modules/]
       },
       {
         test: /\.(js|jsx)$/,
         loader: require.resolve('babel-loader'),
-        exclude: /(node_modules)/,
-      },
-    ],
+        exclude: /(node_modules)/
+      }
+    ]
   },
   node: {
     fs: 'empty',
-    net: 'empty',
+    net: 'empty'
   },
   resolve: {
     mainFields: ['browser', 'main', 'module'],
     extensions: ['.js', '.mjs', '.json', '.jsx'],
-    symlinks: false,
-  },
+    symlinks: false
+  }
 }
