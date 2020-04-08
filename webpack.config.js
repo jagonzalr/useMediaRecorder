@@ -8,10 +8,9 @@ const srcPath = path.join(__dirname, './src')
 module.exports = {
   target: 'web',
   mode: 'production',
-  entry: './src/index.jsx',
+  entry: './src/index.js',
   externals: {
-    react: 'react',
-    'prop-types': 'prop-types'
+    react: 'react'
   },
   output: {
     path: path.resolve('lib'),

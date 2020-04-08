@@ -1,17 +1,20 @@
 {
-  "name": "media-recorder-hook",
+  "name": "useMediaRecorder",
   "version": "0.0.1",
-  "description": "MediaRecorder using React hooks",
-  "main": "src/index.jsx",
+  "description": "MediaRecorder API using React hooks.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
   "scripts": {
     "start": "NODE_ENV=development BABEL_ENV=development node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.demo.js --env=dev --mode development --host 127.0.0.1 --port 3000 --progress --inline --open",
     "build": "webpack --config webpack.config.js --mode production",
-    "prepare": "echo 'Building media-recorder-hook' && npm run build",
+    "prepare": "echo 'Building useMediaRecorder' && npm run build",
     "lint": "eslint src --ext .js,.jsx --fix && eslint demo --ext .js,.jsx --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jagonzalr/media-recorder-hook.git"
+    "url": "git+https://github.com/jagonzalr/useMediaRecorder.git"
   },
   "keywords": [
     "MediaRecorder",
@@ -23,12 +26,11 @@
   "author": "Jose Antonio Gonzalez Rodriguez",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jagonzalr/media-recorder-hook/issues"
+    "url": "https://github.com/jagonzalr/useMediaRecorder/issues"
   },
-  "homepage": "https://github.com/jagonzalr/media-recorder-hook#readme",
+  "homepage": "https://github.com/jagonzalr/useMediaRecorder#readme",
   "peerDependencies": {
-    "prop-types": "^15.x",
-    "react": "^16.x"
+    "react": "^16.8.x"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -52,7 +54,6 @@
     "lint-staged": "^10.1.2",
     "prettier": "^2.0.4",
     "pretty-quick": "^2.0.1",
-    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",

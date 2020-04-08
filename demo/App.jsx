@@ -10,9 +10,7 @@ const App = () => {
   const [showPreview, setShowPreview] = useState(false)
   const [showRecording, setShowRecording] = useState(false)
   const [recordingUrl, setRecordingUrl] = useState(null)
-  /* eslint-disable no-unused-vars */
   const [setCaptureRef, data, err] = useMediaRecorder(isRecording)
-  /* eslint-enable no-unused-vars */
 
   useEffect(() => {
     if (err) {
@@ -70,7 +68,7 @@ const App = () => {
 
   return (
     <Fragment>
-      <h1>MediaRecorder Hook</h1>
+      <h1>useMediaRecorder</h1>
       {err && <p style={{ color: 'red', fontSize: '1.2rem' }}>{err}</p>}
       <div>
         {!showPreview && (
