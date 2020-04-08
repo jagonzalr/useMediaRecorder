@@ -24,7 +24,7 @@
     "Hooks"
   ],
   "author": "Jose Antonio Gonzalez Rodriguez",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jagonzalr/useMediaRecorder/issues"
   },
