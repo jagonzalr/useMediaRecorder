@@ -4,9 +4,21 @@
 
 [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) using [React hooks](https://reactjs.org/docs/hooks-intro.html).
 
-## Installation
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+  - [Video and audio](#video-and-audio)
+  - [Audio only](#audio-only)
+- [Demo](#demo)
+- [License](#license)
+
+## Getting started
 
 `npm install --save use-media-recorder`
+
+- Supports both video + audio and audio only recordings.
+- Currently it generates `video/webm` and `audio/webm`.
 
 ## Usage
 
@@ -36,3 +48,7 @@ cd useMediaRecorder
 npm intall
 npm start
 ```
+
+## License
+
+useMediaRecorder is [MIT licensed](./LICENSE).
