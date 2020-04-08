@@ -22,7 +22,7 @@
 
 ## Usage
 
-### Video
+### Video and audio
 
 ```
 import { useMediaRecorder } from 'use-media-recorder'
