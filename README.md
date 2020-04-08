@@ -1,4 +1,7 @@
-[![Github license](https://img.shields.io/npm/l/use-media-recorder.svg?type=flat)](https://github.com/jagonzalr/useMediaRecorder/blob/master/README.md) [![npm version](https://img.shields.io/npm/v/use-media-recorder.svg?type=flat)](https://www.npmjs.com/package/use-media-recorder)
+<p>
+	<a href="https://github.com/jagonzalr/useMediaRecorder/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/npm/l/use-media-recorder.svg?type=flat" alt="Github license"></a>
+	<a href="https://www.npmjs.com/package/use-media-recorder" target="_blank"><img src="https://img.shields.io/npm/v/use-media-recorder.svg?type=flat" alt="npm version"></a>
+</p>
 
 # useMediaRecorder
 
