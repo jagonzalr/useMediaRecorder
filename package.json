@@ -1,0 +1,84 @@
+{
+  "name": "media-recorder-hook",
+  "version": "0.0.1",
+  "description": "MediaRecorder using React hooks",
+  "main": "src/index.jsx",
+  "scripts": {
+    "start": "NODE_ENV=development BABEL_ENV=development node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.demo.js --env=dev --mode development --host 127.0.0.1 --port 3000 --progress --inline --open",
+    "build": "webpack --config webpack.config.js --mode production",
+    "prepare": "echo 'Building media-recorder-hook' && npm run build",
+    "lint": "eslint src --ext .js,.jsx --fix && eslint demo --ext .js,.jsx --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagonzalr/media-recorder-hook.git"
+  },
+  "keywords": [
+    "MediaRecorder",
+    "Video",
+    "Audio",
+    "React",
+    "Hooks"
+  ],
+  "author": "Jose Antonio Gonzalez Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jagonzalr/media-recorder-hook/issues"
+  },
+  "homepage": "https://github.com/jagonzalr/media-recorder-hook#readme",
+  "peerDependencies": {
+    "prop-types": "^15.x",
+    "react": "^16.x"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.4",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.0.4",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.2",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dev-utils": "^10.2.1",
+    "react-dom": "^16.13.1",
+    "react-hot-loader": "^4.12.20",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import"
+    ]
+  },
+  "lint-staged": {
+    "**/*.{js,jsx}": [
+      "npm run --silent lint",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && pretty-quick --staged"
+    }
+  }
+}
