@@ -1,0 +1,64 @@
+@import 'variables';
+
+html {
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: $background-color;
+  color: $black-color;
+  font-size: 1rem;
+  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-weight: 400;
+  height: 100%;
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+.bold {
+  font-weight: 700;
+}
+
+.action {
+  color: $blue-color;
+
+  &:hover {
+    color: darken($blue-color, 10%);
+    text-decoration: underline;
+  }
+}
+
+button,
+.button {
+  align-items: center;
+  background-color: $blue-color;
+  border-radius: 0.125rem;
+  color: $white-color;
+  display: inline-flex;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0.5rem 1rem;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(66, 152, 225, 0.5);
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: darken($blue-color, 10%);
+  }
+}
