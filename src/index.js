@@ -29,16 +29,20 @@ export const useMediaRecorder = isRecording => {
 
   useEffect(() => {
     if (isRecording) {
-      setData(null)
-      let chunks = []
+      if (!MediaRecorder) {
+        setErr('Unsupported browser')
+      } else {
+        setData(null)
+        let chunks = []
 
-      const mediaRecorder = new MediaRecorder(ref.captureStream())
-      mediaRecorder.ondataavailable = e => chunks.push(e.data)
-      mediaRecorder.onerror = e => setErr(getRecorderError(e.error))
-      mediaRecorder.onstop = () => setData(chunks)
-      mediaRecorder.start(10)
+        const mediaRecorder = new MediaRecorder(ref.captureStream())
+        mediaRecorder.ondataavailable = e => chunks.push(e.data)
+        mediaRecorder.onerror = e => setErr(getRecorderError(e.error))
+        mediaRecorder.onstop = () => setData(chunks)
+        mediaRecorder.start(10)
 
-      setRecorder(mediaRecorder)
+        setRecorder(mediaRecorder)
+      }
     } else if (recorder) {
       recorder.stop()
     }
