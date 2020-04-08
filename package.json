@@ -2,7 +2,10 @@
   "name": "useMediaRecorder",
   "version": "0.0.1",
   "description": "MediaRecorder API using React hooks.",
-  "main": "src/index.jsx",
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
   "scripts": {
     "start": "NODE_ENV=development BABEL_ENV=development node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.demo.js --env=dev --mode development --host 127.0.0.1 --port 3000 --progress --inline --open",
     "build": "webpack --config webpack.config.js --mode production",
@@ -27,7 +30,6 @@
   },
   "homepage": "https://github.com/jagonzalr/useMediaRecorder#readme",
   "peerDependencies": {
-    "prop-types": "^15.x",
     "react": "^16.8.x"
   },
   "devDependencies": {
