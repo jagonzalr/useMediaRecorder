@@ -4,6 +4,9 @@ import React, { Fragment, useEffect, useRef, useState } from 'react'
 
 import { useMediaRecorder } from '../src/index'
 
+import './styles/tailwind.css'
+import './styles/index.scss'
+
 const App = () => {
   const recordingRef = useRef(null)
   const [isRecording, setIsRecording] = useState(false)
@@ -67,38 +70,54 @@ const App = () => {
   }
 
   return (
-    <Fragment>
-      <h1>useMediaRecorder</h1>
+    <div className='container mx-auto px-3 py-2'>
+      <h1 className='bold font-bold text-3xl'>useMediaRecorder</h1>
       {err && <p style={{ color: 'red', fontSize: '1.2rem' }}>{err}</p>}
-      <div>
+      <div className='flex mt-2'>
         {!showPreview && (
-          <button onClick={onStartPreview}>Start Preview</button>
+          <button onClick={onStartPreview} className='flex-shrink mr-2'>
+            Start Preview
+          </button>
         )}
         {showPreview && !isRecording && !showRecording && (
-          <button onClick={onStopPreview}>Stop Preview</button>
+          <button onClick={onStopPreview} className='flex-shrink mr-2'>
+            Stop Preview
+          </button>
         )}
         {showPreview && !isRecording && !showRecording && (
-          <button onClick={onStartRecording}>Start Recording</button>
+          <button onClick={onStartRecording} className='flex-shrink mr-2'>
+            Start Recording
+          </button>
         )}
         {isRecording && (
-          <button onClick={onStopRecording}>Stop Recording</button>
+          <button onClick={onStopRecording} className='flex-shrink mr-2'>
+            Stop Recording
+          </button>
         )}
         {recordingUrl && (
           <Fragment>
             {!showRecording && (
-              <button onClick={onShowRecording}>Show Recording</button>
+              <button onClick={onShowRecording} className='flex-shrink mr-2'>
+                Show Recording
+              </button>
             )}
             {showRecording && (
-              <button onClick={onHideRecording}>Hide Recording</button>
+              <button onClick={onHideRecording} className='flex-shrink mr-2'>
+                Hide Recording
+              </button>
             )}
-            <a href={recordingUrl} download={'recording.webm'}>
+            <a
+              href={recordingUrl}
+              download={'recording.webm'}
+              className='flex-shrink mr-2 button'
+            >
               Download
             </a>
           </Fragment>
         )}
       </div>
-      {showPreview && !showRecording && (
-        <div>
+      <div className='mt-2'>
+        {showPreview && !showRecording && (
           <video
             autoPlay
             muted
@@ -107,10 +126,8 @@ const App = () => {
             width='600'
             height='400'
           />
-        </div>
-      )}
-      {showRecording && (
-        <div>
+        )}
+        {showRecording && (
           <video
             controls
             ref={recordingRef}
@@ -118,9 +135,9 @@ const App = () => {
             width='600'
             height='400'
           />
-        </div>
-      )}
-    </Fragment>
+        )}
+      </div>
+    </div>
   )
 }
 
