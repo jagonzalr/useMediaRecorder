@@ -2,11 +2,11 @@
 [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) using [React hooks](https://reactjs.org/docs/hooks-intro.html).
 
 ## Installation
-`npm install --save useMediaRecorder`
+`npm install --save use-media-recorder`
 
 ## Usage
 ```
-import { useMediaRecorder } from 'useMediaRecorder'
+import { useMediaRecorder } from 'use-media-recorder'
 const [isRecording, setIsRecording] = useState(false)
 const [setCaptureRef, data, err] = useMediaRecorder(isRecording)
 ```
