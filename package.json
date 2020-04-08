@@ -1,6 +1,6 @@
 {
   "name": "use-media-recorder",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "MediaRecorder API using React hooks.",
   "main": "lib/index.js",
   "files": [
