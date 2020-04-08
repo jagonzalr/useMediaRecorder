@@ -38,7 +38,6 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
         let chunks = []
 
         const mediaRecorder = new MediaRecorder(ref.captureStream())
-        console.log(mediaRecorder)
         mediaRecorder.ondataavailable = e => chunks.push(e.data)
         mediaRecorder.onerror = e => setErr(getRecorderError(e.error))
         mediaRecorder.onstop = () => setData(chunks)
