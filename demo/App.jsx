@@ -9,11 +9,15 @@ import './styles/index.scss'
 
 const App = () => {
   const recordingRef = useRef(null)
+  const [recordingType, setRecordingType] = useState('video')
   const [isRecording, setIsRecording] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
   const [showRecording, setShowRecording] = useState(false)
   const [recordingUrl, setRecordingUrl] = useState(null)
-  const [setCaptureRef, data, err] = useMediaRecorder(isRecording)
+  const [setCaptureRef, data, err] = useMediaRecorder({
+    isRecording,
+    audioOnly: recordingType === 'audio'
+  })
 
   useEffect(() => {
     if (err) {
@@ -23,7 +27,10 @@ const App = () => {
 
   useEffect(() => {
     if (data) {
-      const blob = new Blob(data, { type: 'video/webm' })
+      const options = {
+        type: recordingType === 'video' ? 'video/webm' : 'audio/webm'
+      }
+      const blob = new Blob(data, options)
       const url = URL.createObjectURL(blob)
       setRecordingUrl(url)
     }
@@ -72,6 +79,13 @@ const App = () => {
   return (
     <div className='container mx-auto px-3 py-2'>
       <h1 className='bold font-bold text-3xl'>useMediaRecorder</h1>
+      <select
+        value={recordingType}
+        onChange={e => setRecordingType(e.target.value)}
+      >
+        <option value='video'>Video</option>
+        <option value='audio'>Audio</option>
+      </select>
       {err && <p style={{ color: 'red', fontSize: '1.2rem' }}>{err}</p>}
       <div className='flex mt-2'>
         {!showPreview && (
@@ -118,23 +132,40 @@ const App = () => {
       </div>
       <div className='mt-2'>
         {showPreview && !showRecording && (
-          <video
-            autoPlay
-            muted
-            ref={setCaptureRef}
-            id='capture'
-            width='600'
-            height='400'
-          />
+          <Fragment>
+            {recordingType === 'video' && (
+              <video
+                autoPlay
+                muted
+                ref={setCaptureRef}
+                id='capture-video'
+                width='600'
+                height='400'
+              />
+            )}
+            {recordingType === 'audio' && (
+              <Fragment>
+                <audio autoPlay muted ref={setCaptureRef} id='capture-audio' />
+                {isRecording && <p>Recording audio ...</p>}
+              </Fragment>
+            )}
+          </Fragment>
         )}
         {showRecording && (
-          <video
-            controls
-            ref={recordingRef}
-            id='recording'
-            width='600'
-            height='400'
-          />
+          <Fragment>
+            {recordingType === 'video' && (
+              <video
+                controls
+                ref={recordingRef}
+                id='recording-video'
+                width='600'
+                height='400'
+              />
+            )}
+            {recordingType === 'audio' && (
+              <audio controls ref={recordingRef} id='recording-audio' />
+            )}
+          </Fragment>
         )}
       </div>
     </div>

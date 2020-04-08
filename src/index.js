@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export const useMediaRecorder = isRecording => {
+export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
   const [err, setErr] = useState(null)
   const [data, setData] = useState(null)
   const [recorder, setRecorder] = useState(null)
@@ -11,7 +11,9 @@ export const useMediaRecorder = isRecording => {
 
   useEffect(() => {
     if (ref) {
-      getUserMedia(setStream, setErr)
+      let constraints = { audio: true }
+      if (!audioOnly) constraints['video'] = true
+      getUserMedia(constraints, setStream, setErr)
     } else if (stream.id) {
       removeTracks(stream)
       setStream({})
@@ -36,6 +38,7 @@ export const useMediaRecorder = isRecording => {
         let chunks = []
 
         const mediaRecorder = new MediaRecorder(ref.captureStream())
+        console.log(mediaRecorder)
         mediaRecorder.ondataavailable = e => chunks.push(e.data)
         mediaRecorder.onerror = e => setErr(getRecorderError(e.error))
         mediaRecorder.onstop = () => setData(chunks)
@@ -51,10 +54,9 @@ export const useMediaRecorder = isRecording => {
   return [setRef, data, err]
 }
 
-async function getUserMedia(setStream, setErr) {
+async function getUserMedia(constraints, setStream, setErr) {
   try {
-    const options = { video: true, audio: true }
-    const stream = await navigator.mediaDevices.getUserMedia(options)
+    const stream = await navigator.mediaDevices.getUserMedia(constraints)
     setStream(stream)
   } catch (err) {
     setErr(err.message)
