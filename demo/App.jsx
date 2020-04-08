@@ -1,6 +1,8 @@
+/* eslint-disable */
 'use strict'
 
 import React, { Fragment, useEffect, useRef, useState } from 'react'
+import WaveSurfer from 'wavesurfer.js'
 
 import { useMediaRecorder } from '../src/index'
 
@@ -9,6 +11,8 @@ import './styles/index.scss'
 
 const App = () => {
   const recordingRef = useRef(null)
+  const [waveform, setWaveform] = useState(null)
+  const [waveformPlaying, setWaveformPlaying] = useState(false)
   const [recordingType, setRecordingType] = useState('video')
   const [isRecording, setIsRecording] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
@@ -37,7 +41,31 @@ const App = () => {
   }, [data])
 
   useEffect(() => {
-    if (showRecording && recordingUrl) {
+    if (showRecording && recordingType === 'audio') {
+      setWaveform(
+        WaveSurfer.create({
+          barWidth: 3,
+          cursorWidth: 1,
+          container: '#waveform',
+          backend: 'WebAudio',
+          height: 80,
+          progressColor: '#2D5BFF',
+          responsive: true,
+          waveColor: '#EFEFEF',
+          cursorColor: 'transparent'
+        })
+      )
+    }
+  }, [showRecording, recordingType])
+
+  useEffect(() => {
+    if (waveform && recordingUrl) {
+      waveform.load(recordingUrl)
+    }
+  }, [waveform, recordingUrl])
+
+  useEffect(() => {
+    if (showRecording && recordingUrl && recordingType === 'video') {
       recordingRef.current.src = recordingUrl
     }
   }, [showRecording])
@@ -59,6 +87,8 @@ const App = () => {
   const onStartRecording = e => {
     e.preventDefault()
     setIsRecording(true)
+    setShowRecording(false)
+    setRecordingUrl(null)
   }
 
   const onStopRecording = e => {
@@ -74,6 +104,12 @@ const App = () => {
   const onHideRecording = e => {
     e.preventDefault()
     setShowRecording(false)
+  }
+
+  const onWaveformPlay = e => {
+    e.preventDefault()
+    setWaveformPlaying(!waveformPlaying)
+    if (waveform) waveform.playPause()
   }
 
   return (
@@ -122,7 +158,7 @@ const App = () => {
             )}
             <a
               href={recordingUrl}
-              download={'recording.webm'}
+              download={`recording-${recordingType}.webm`}
               className='flex-shrink mr-2 button'
             >
               Download
@@ -146,6 +182,7 @@ const App = () => {
             {recordingType === 'audio' && (
               <Fragment>
                 <audio autoPlay muted ref={setCaptureRef} id='capture-audio' />
+                {!isRecording && <p>Listening to audio ...</p>}
                 {isRecording && <p>Recording audio ...</p>}
               </Fragment>
             )}
@@ -163,7 +200,12 @@ const App = () => {
               />
             )}
             {recordingType === 'audio' && (
-              <audio controls ref={recordingRef} id='recording-audio' />
+              <Fragment>
+                <div id='waveform' className='mb-2' />
+                <button onClick={onWaveformPlay}>
+                  {waveformPlaying ? 'Pause' : 'Play'}
+                </button>
+              </Fragment>
             )}
           </Fragment>
         )}
