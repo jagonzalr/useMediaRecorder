@@ -22,9 +22,7 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
     }
 
     return () => {
-      if (stream.id) {
-        removeTracks(stream)
-      }
+      if (stream.id) removeTracks(stream)
     }
   }, [ref])
 
