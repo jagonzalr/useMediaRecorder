@@ -2,12 +2,22 @@
 
 import { useEffect, useState } from 'react'
 
+window.stream = null
+
 export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
   const [err, setErr] = useState(null)
   const [data, setData] = useState(null)
   const [recorder, setRecorder] = useState(null)
   const [ref, setRef] = useState(null)
   const [stream, setStream] = useState({})
+
+  useEffect(() => {
+    return () => {
+      if (window.stream) {
+        removeTracks(window.stream)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (ref) {
@@ -19,10 +29,6 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
       setStream({})
       if (recorder) setRecorder(null)
       if (data) setData(null)
-    }
-
-    return () => {
-      if (stream.id) removeTracks(stream)
     }
   }, [ref])
 
@@ -52,10 +58,6 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
     } else if (recorder) {
       recorder.stop()
     }
-
-    return () => {
-      if (recorder) recorder.stop()
-    }
   }, [isRecording])
 
   return [setRef, data, err]
@@ -64,6 +66,7 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
 async function getUserMedia(constraints, setStream, setErr) {
   try {
     const stream = await navigator.mediaDevices.getUserMedia(constraints)
+    window.stream = stream
     setStream(stream)
   } catch (err) {
     setErr(err.message)
