@@ -54,6 +54,10 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
     } else if (recorder) {
       recorder.stop()
     }
+
+    return () => {
+      if (recorder) recorder.stop()
+    }
   }, [isRecording])
 
   return [setRef, data, err]
