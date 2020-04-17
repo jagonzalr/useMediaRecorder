@@ -20,6 +20,10 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
       if (recorder) setRecorder(null)
       if (data) setData(null)
     }
+
+    return () => {
+      if (stream.id) removeTracks(stream)
+    }
   }, [ref])
 
   useEffect(() => {
@@ -47,6 +51,10 @@ export const useMediaRecorder = ({ isRecording, audioOnly = false }) => {
       }
     } else if (recorder) {
       recorder.stop()
+    }
+
+    return () => {
+      if (recorder) recorder.stop()
     }
   }, [isRecording])
 
@@ -89,10 +97,14 @@ function removeTrack(stream, track) {
 }
 
 function removeTracks(stream) {
-  const tracks = getTracks(stream)
-  if (tracks && tracks.length > 0) {
-    tracks.forEach(track => {
-      removeTrack(stream, track)
-    })
+  try {
+    const tracks = getTracks(stream)
+    if (tracks && tracks.length > 0) {
+      tracks.forEach(track => {
+        removeTrack(stream, track)
+      })
+    }
+  } catch (err) {
+    console.error(`Error while removing tracks: ${err.message}`)
   }
 }
