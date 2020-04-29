@@ -108,6 +108,8 @@ function removeTracks(stream) {
       })
     }
   } catch (err) {
+    /* eslint-disable */
     console.error(`Error while removing tracks: ${err.message}`)
+    /* eslint-enable */
   }
 }
