@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict'
 
 const path = require('path')
@@ -9,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const srcPath = path.join(__dirname, './demo')
 
 let config = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   target: 'web',
   mode: 'development',
   stats: {
@@ -94,21 +95,20 @@ let config = {
       }
     ]
   },
-  node: {
-    fs: 'empty',
-    net: 'empty'
-  },
   resolve: {
     mainFields: ['browser', 'main', 'module'],
     extensions: ['.js', '.mjs', '.json', '.jsx'],
-    symlinks: false
+    symlinks: false,
+    fallback: {
+      fs: 'empty',
+      net: 'empty'
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './demo/index.html',
       inject: true
     }),
-    new webpack.NamedModulesPlugin(),
     new CaseSensitivePathsPlugin()
   ]
 }
