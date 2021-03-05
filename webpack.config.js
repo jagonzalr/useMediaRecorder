@@ -6,6 +6,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const srcPath = path.join(__dirname, './src')
 
 module.exports = {
+  devtool: 'source-map',
   target: 'web',
   mode: 'production',
   entry: './src/index.js',
@@ -40,13 +41,13 @@ module.exports = {
       }
     ]
   },
-  node: {
-    fs: 'empty',
-    net: 'empty'
-  },
   resolve: {
     mainFields: ['browser', 'main', 'module'],
     extensions: ['.js', '.mjs', '.json', '.jsx'],
-    symlinks: false
+    symlinks: false,
+    fallback: {
+      fs: 'empty',
+      net: 'empty'
+    }
   }
 }
